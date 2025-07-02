@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+  <meta charset="UTF-8" />
+  <title>שאל שאלה</title>
+  <style>
+    body {
+      background-color: #111;
+      color: white;
+      font-family: 'Arial', sans-serif;
+      direction: rtl;
+      text-align: center;
+      padding: 20px;
+    }
+
+    nav {
+      background-color: #121212;
+      display: flex;
+      justify-content: center;
+      padding: 10px;
+      margin-bottom: 20px;
+    }
+
+    nav a {
+      color: #00ffff;
+      text-decoration: none;
+      margin: 0 20px;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: yellow;
+    }
+
+    h1 {
+      color: #00ffff;
+    }
+
+    form {
+      max-width: 500px;
+      margin: 0 auto;
+      background-color: #222;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #000;
+    }
+
+    input, textarea, button {
+      width: 100%;
+      margin: 10px 0;
+      padding: 10px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+    }
+
+    input, textarea {
+      background-color: #333;
+      color: white;
+    }
+
+    button {
+      background-color: #00ff99;
+      color: black;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .message {
+      margin-top: 20px;
+      color: #00ff99;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html">עמוד הבית</a>
+    <a href="budget.html">המלצות לפי תקציב</a>
+    <a href="faq.html">שאלות ותשובות</a>
+    <a href="ask.html">שאל שאלה</a>
+    <a href="admin.html">מנהל שאלות</a>
+  </nav>
+
+  <h1>שאל את השאלה שלך</h1>
+
+  <form onsubmit="submitQuestion(event)">
+    <input type="text" id="name" placeholder="השם שלך" required />
+    <textarea id="question" rows="5" placeholder="מה השאלה שלך?" required></textarea>
+    <button type="submit">שלח</button>
+    <div class="message" id="message"></div>
+  </form>
+
+  <script>
+    function submitQuestion(event) {
+      event.preventDefault();
+
+      const name = document.getElementById('name').value.trim();
+      const question = document.getElementById('question').value.trim();
+      const message = document.getElementById('message');
+
+      if (name && question) {
+        // קבל את רשימת השאלות הקיימות או יצירת מערך ריק
+        let questions = JSON.parse(localStorage.getItem('questions')) || [];
+
+        // הוסף את השאלה החדשה
+        questions.push({ name, question, date: new Date().toISOString() });
+
+        // שמור בחזרה ב-localStorage
+        localStorage.setItem('questions', JSON.stringify(questions));
+
+        message.textContent = '✅ השאלה שלך התקבלה! תודה ' + name + '!';
+
+        document.getElementById('name').value = '';
+        document.getElementById('question').value = '';
+      } else {
+        message.textContent = '❗ יש למלא את כל השדות.';
+      }
+    }
+  </script>
+
+</body>
+</html>

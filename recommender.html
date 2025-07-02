@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+  <meta charset="UTF-8">
+  <title>בחר ציוד לפי שימוש</title>
+  <style>
+    body {
+      background-color: #111;
+      color: white;
+      font-family: Arial, sans-serif;
+      direction: rtl;
+      padding: 20px;
+    }
+    nav {
+      background-color: #121212;
+      display: flex;
+      justify-content: center;
+      padding: 10px;
+      margin-bottom: 20px;
+    }
+    nav a {
+      color: #00ffff;
+      text-decoration: none;
+      margin: 0 20px;
+      font-weight: bold;
+    }
+    nav a:hover {
+      color: yellow;
+    }
+    h1 {
+      color: #00ffff;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    form {
+      max-width: 500px;
+      margin: 0 auto;
+      background-color: #222;
+      padding: 20px;
+      border-radius: 8px;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+    select, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+    }
+    button {
+      background-color: #00ff99;
+      color: black;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    #result {
+      max-width: 600px;
+      margin: 30px auto;
+      padding: 20px;
+      background-color: #222;
+      border-radius: 8px;
+    }
+    .item {
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html">עמוד הבית</a>
+    <a href="budget.html">המלצות לפי תקציב</a>
+    <a href="faq.html">שאלות ותשובות</a>
+    <a href="ask.html">שאל שאלה</a>
+    <a href="admin.html">מנהל שאלות</a>
+    <a href="recommender.html">בחירת ציוד</a>
+  </nav>
+
+  <h1>בחר את הציוד שמתאים לך</h1>
+
+  <form id="recommendationForm">
+    <label for="genre">איזה סוג משחקים אתה משחק הכי הרבה?</label>
+    <select id="genre" required>
+      <option value="">-- בחר --</option>
+      <option value="fps">FPS / יריות</option>
+      <option value="rpg">RPG / עולם פתוח</option>
+      <option value="strategy">אסטרטגיה</option>
+      <option value="casual">משחקים קלילים</option>
+    </select>
+
+    <label for="creator">האם אתה יוצר תוכן / עורך וידאו?</label>
+    <select id="creator" required>
+      <option value="">-- בחר --</option>
+      <option value="yes">כן</option>
+      <option value="no">לא</option>
+    </select>
+
+    <label for="budget">מה התקציב שלך?</label>
+    <select id="budget" required>
+      <option value="">-- בחר --</option>
+      <option value="1000">עד 1000 ש"ח</option>
+      <option value="3000">עד 3000 ש"ח</option>
+      <option value="5000">עד 5000 ש"ח</option>
+      <option value="10000">עד 10,000 ש"ח</option>
+    </select>
+
+    <button type="submit">קבל המלצה</button>
+  </form>
+
+  <div id="result"></div>
+
+  <script>
+    document.getElementById('recommendationForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const genre = document.getElementById('genre').value;
+      const creator = document.getElementById('creator').value;
+      const budget = parseInt(document.getElementById('budget').value);
+      const result = document.getElementById('result');
+      result.innerHTML = '';
+
+      const recommendations = [];
+
+      // בסיסי לפי ז'אנר
+      if (genre === 'fps') {
+        recommendations.push('🎮 עכבר קל עם חיישן מהיר (לדוגמה Glorious Model O)');
+        recommendations.push('🖥️ מסך עם 144Hz לפחות');
+      } else if (genre === 'rpg') {
+        recommendations.push('🎧 אוזניות עם סאונד איכותי וחוויית סראונד');
+        recommendations.push('🖥️ מסך עם צבעים עשירים (IPS או OLED)');
+      } else if (genre === 'strategy') {
+        recommendations.push('🖱️ עכבר נוח עם הרבה כפתורים צדדיים');
+        recommendations.push('🖥️ מסך גדול לריבוי מידע');
+      } else if (genre === 'casual') {
+        recommendations.push('🎮 עכבר פשוט ואמין');
+        recommendations.push('🖥️ מסך רגיל 60-75Hz');
+      }
+
+      // אם הוא יוצר תוכן
+      if (creator === 'yes') {
+        recommendations.push('💻 מומלץ לשים דגש על מעבד חזק וזיכרון RAM גבוה');
+        recommendations.push('📷 כרטיס לכידת וידאו אם אתה מצלם סטרימינג');
+      }
+
+      // לפי תקציב
+      if (budget <= 1000) {
+        recommendations.push('🛒 התמקד בציוד בסיסי ומשומש/מוזל');
+      } else if (budget <= 3000) {
+        recommendations.push('✅ אפשר למצוא סט ציוד סביר כולל אוזניות, עכבר ומסך 1080p');
+      } else if (budget <= 5000) {
+        recommendations.push('⚙️ ניתן לשלב ציוד איכותי כמו מקלדת מכנית ועכבר מתקדם');
+      } else if (budget <= 10000) {
+        recommendations.push('🚀 אתה יכול להרכיב עמדת גיימינג מעולה עם ציוד פרימיום');
+      }
+
+      result.innerHTML = '<h2>המלצות עבורך:</h2>' + recommendations.map(r => `<div class="item">${r}</div>`).join('');
+    });
+  </script>
+
+</body>
+</html>

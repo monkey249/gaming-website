@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+  <meta charset="UTF-8" />
+  <title>המלצות לפי תקציב</title>
+  <style>
+    body { background-color: #111; color: white; font-family: Arial, sans-serif; direction: rtl; padding: 20px; }
+    nav { background-color: #121212; display: flex; justify-content: center; padding: 10px; margin-bottom: 20px; }
+    nav a { color: #00ffff; text-decoration: none; margin: 0 20px; font-weight: bold; transition: color 0.3s; }
+    nav a:hover { color: yellow; }
+    h1 { color: #00ffff; text-align: center; margin-bottom: 20px; }
+    form { max-width: 400px; margin: 0 auto 30px auto; background-color: #222; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px #000; }
+    select, button { width: 100%; padding: 10px; font-size: 16px; border: none; border-radius: 6px; margin-top: 10px; }
+    button { background-color: #00ff99; color: black; font-weight: bold; cursor: pointer; }
+    #recommendations { max-width: 600px; margin: 0 auto; }
+    .item { background-color: #222; margin-bottom: 15px; padding: 15px; border-radius: 8px; }
+    .item h3 { margin: 0 0 8px 0; color: #00ff88; }
+    .item h3 a { color: #00ff88; text-decoration: none; }
+    .item h3 a:hover { text-decoration: underline; color: #66ffaa; }
+  </style>
+</head>
+<body>
+  <nav>  
+    <a href="index.html">עמוד הבית</a>
+    <a href="budget.html">המלצות לפי תקציב</a>
+    <a href="faq.html">שאלות ותשובות</a>
+    <a href="ask.html">שאל שאלה</a>
+    <a href="admin.html">מנהל שאלות</a>
+    <a href="recommender.html">בחירת ציוד</a>
+  </nav>
+
+  <h1>המלצות לפי תקציב</h1>
+
+  <form id="budgetForm">
+    <label for="budgetSelect">בחר את התקציב שלך:</label>
+    <select id="budgetSelect" required>
+      <option value="">-- בחר תקציב --</option>
+      <option value="1000">עד 1000 ש"ח</option>
+      <option value="3000">עד 3000 ש"ח</option>
+      <option value="5000">עד 5000 ש"ח</option>
+      <option value="10000">עד 10,000 ש"ח</option>
+    </select>
+    <button type="submit">קבל המלצות</button>
+  </form>
+
+  <div id="recommendations"></div>
+
+  <script>
+    const recommendationsData = [
+      {
+        budget: 1000,
+        items: [
+          { name: 'עכבר Logitech G203', description: 'עכבר פשוט, איכותי', link: 'https://ksp.co.il/mob/cat/26889?srsltid=AfmBOop6M0_4XA6-wo58nCrm32ZeX57JqOJsDW412tSYgZJm04YHSmD2' },
+          { name: 'אוזניות HyperX Cloud Stinger 2', description: 'אוזניות בסיסיות לגיימינג', link: 'https://www.ivory.co.il/catalog.php?id=75335' },
+          { name: 'מסך AOC E970Swn 18.5″', description: 'מסך קטן במסגרת תקציבית צנועה', link: 'https://ksp.co.il' },
+          { name: 'פד SteelSeries QcK מיני', description: 'פד איכותי לגיימרים', link: 'https://ksp.co.il' },
+        ]
+      },
+      {
+        budget: 3000,
+        items: [
+          { name: 'עכבר Glorious Model O', description: 'עכבר קל ואיכותי', link: 'https://ksp.co.il/mob/cat/26889' },
+          { name: 'אוזניות HyperX Cloud Stinger 2 Core', description: 'אוזניות נוחות ואיכותיות', link: 'https://www.ivory.co.il/catalog.php?id=75329' },
+          { name: 'מסך LG 24MK430 75Hz', description: 'מסך 24″ איכותי ל‑1080p', link: 'https://ksp.co.il' },
+          { name: 'פד SteelSeries QcK', description: 'משטח פופולרי לגיימינג', link: 'https://ksp.co.il' },
+        ]
+      },
+      {
+        budget: 5000,
+        items: [
+          { name: 'עכבר Razer DeathAdder V2', description: 'עכבר מדויק וארגונומי', link: 'https://ksp.co.il/mob/cat/26889' },
+          { name: 'אוזניות Logitech G Pro X', description: 'אוזניות מקצועיות עם סאונד נקי', link: 'https://ksp.co.il' },
+          { name: 'מסך MSI Optix G241 144Hz', description: 'מסך 144Hz לגיימינג חלק', link: 'https://ksp.co.il' },
+          { name: 'פד Razer Gigantus V2', description: 'פד גדול ומדויק', link: 'https://ksp.co.il' },
+        ]
+      },
+      {
+        budget: 10000,
+        items: [
+          { name: 'עכבר Logitech G Pro X Superlight', description: 'עכבר קל ומדויק במיוחד', link: 'https://ksp.co.il/mob/cat/26889' },
+          { name: 'אוזניות SteelSeries Arctis Nova Pro', description: 'אוזניות פרימיום עם ANC', link: 'https://ksp.co.il' },
+          { name: 'מסך Gigabyte M27Q 170Hz QHD', description: 'מסך גדול+רזולוציה גבוהה', link: 'https://ksp.co.il' },
+          { name: 'פד Artisan Zero XL', description: 'פד מקצועי לגיימרים תחרותיים', link: 'https://ksp.co.il' },
+        ]
+      },
+    ];
+
+    document.getElementById('budgetForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      const budget = parseInt(document.getElementById('budgetSelect').value);
+      const recDiv = document.getElementById('recommendations');
+      recDiv.innerHTML = '';
+      const suitable = recommendationsData.filter(r => r.budget <= budget).sort((a,b)=>b.budget-a.budget)[0];
+      if (!suitable) { recDiv.textContent = 'אין המלצות לתקציב זה.'; return; }
+      suitable.items.forEach(item=>{
+        const div = document.createElement('div'); div.className='item';
+        div.innerHTML=`<h3><a href="${item.link}" target="_blank" rel="noopener noreferrer">${item.name}</a></h3><p>${item.description}</p>`;
+        recDiv.appendChild(div);
+      });
+    });
+  </script>
+</body>
+</html>
